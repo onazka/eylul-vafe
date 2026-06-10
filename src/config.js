@@ -13,7 +13,7 @@ export const CONFIG = {
 
   // INSTAGRAM LİNKİ
   // Cafe sahibinin instagram profil linkini buraya yapıştırın.
-  instagramLink: "https://instagram.com/",
+  instagramLink: "https://www.instagram.com/eylul_cafe_nargile/",
 
   // FİRMA İMZASI (FOOTER)
   brandSignature: "Designed & Developed by TZN develop"

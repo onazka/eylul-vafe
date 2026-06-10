@@ -66,15 +66,14 @@ function initApp() {
       title.innerHTML = `${cat.icon} ${cat.name}`;
       section.appendChild(title);
 
-      // Hero Image for Category (If filter is specific category, or always show for visual)
-      // We will show category hero images if they have one defined.
-      // Wait, we need the image to exist. For now, we will add an image placeholder.
+      // Hero Image — görseller artık public/images/categories/ altında
       if (cat.image && filterId !== 'all') {
-          // Only show hero image when a specific category is clicked to keep 'All' view clean
           const heroImg = document.createElement('img');
-          heroImg.src = "/src/assets/images/" + cat.image;
+          heroImg.src = "/images/categories/" + cat.image;
+          heroImg.alt = cat.name;
           heroImg.className = 'category-hero-image';
-          heroImg.onerror = () => heroImg.style.display = 'none'; // hide if not found
+          heroImg.loading = 'lazy';
+          heroImg.onerror = () => heroImg.style.display = 'none';
           section.appendChild(heroImg);
       }
 
@@ -87,12 +86,25 @@ function initApp() {
         
         let descHtml = item.description ? `<div class="item-desc">${item.description}</div>` : '';
         
+        // Ürün görseli — public/images/items/{id}.jpg
+        let imageHtml = '';
+        if (item.image) {
+          imageHtml = `<img 
+            src="/images/items/${item.image}" 
+            alt="${item.name}" 
+            class="item-image" 
+            loading="lazy"
+            onerror="this.style.display='none'"
+          />`;
+        }
+
         card.innerHTML = `
           <div class="item-info">
             <div class="item-name">${item.name}</div>
             ${descHtml}
             <div class="item-price">${item.price} TL</div>
           </div>
+          ${imageHtml}
         `;
         grid.appendChild(card);
       });

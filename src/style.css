@@ -180,22 +180,42 @@ header {
 
 /* IMAGES */
 .item-image {
-  width: 80px;
-  height: 80px;
-  border-radius: 8px;
+  width: 60px;
+  height: 60px;
+  min-width: 60px;
+  border-radius: 10px;
   object-fit: cover;
-  margin-left: 15px;
+  margin-left: 12px;
   background-color: var(--surface-color-light);
   border: 1px solid var(--border-color);
+  transition: border-color 0.3s ease, box-shadow 0.3s ease;
+}
+.menu-item:hover .item-image,
+.menu-item:active .item-image {
+  border-color: var(--primary-color);
+  box-shadow: 0 2px 8px var(--primary-color-glow);
+}
+@media (min-width: 768px) {
+  .item-image {
+    width: 70px;
+    height: 70px;
+    min-width: 70px;
+    border-radius: 12px;
+  }
 }
 .category-hero-image {
   width: 100%;
-  height: 150px;
+  height: 180px;
   object-fit: cover;
   border-radius: 12px;
   margin-bottom: 20px;
   border: 1px solid var(--primary-color);
   box-shadow: 0 4px 15px var(--primary-color-glow);
+}
+@media (min-width: 768px) {
+  .category-hero-image {
+    height: 250px;
+  }
 }
 
 /* FOOTER */
