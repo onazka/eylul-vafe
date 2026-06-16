@@ -1,0 +1,213 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Eylül Cafe QR Kod</title>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;700&family=Inter:wght@300;400;600&display=swap" rel="stylesheet">
+  <script src="https://cdn.jsdelivr.net/npm/qrcode-generator@1.4.4/qrcode.min.js"></script>
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    
+    body {
+      background: #1a1a1a;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      min-height: 100vh;
+      font-family: 'Inter', sans-serif;
+      padding: 20px;
+    }
+
+    .qr-card {
+      width: 400px;
+      background: linear-gradient(145deg, #111111 0%, #1a1a1a 50%, #111111 100%);
+      border: 2px solid #D4AF37;
+      border-radius: 24px;
+      padding: 40px 30px;
+      text-align: center;
+      position: relative;
+      overflow: hidden;
+      box-shadow: 
+        0 0 30px rgba(212, 175, 55, 0.15),
+        0 20px 60px rgba(0, 0, 0, 0.5);
+    }
+
+    /* Dekoratif köşe süsleri */
+    .qr-card::before,
+    .qr-card::after {
+      content: '✦';
+      position: absolute;
+      color: #D4AF37;
+      font-size: 14px;
+      opacity: 0.5;
+    }
+    .qr-card::before { top: 15px; left: 20px; }
+    .qr-card::after { top: 15px; right: 20px; }
+
+    .corner-bl, .corner-br {
+      position: absolute;
+      color: #D4AF37;
+      font-size: 14px;
+      opacity: 0.5;
+    }
+    .corner-bl { bottom: 15px; left: 20px; }
+    .corner-br { bottom: 15px; right: 20px; }
+
+    /* Altın çizgi üst */
+    .gold-line {
+      width: 60px;
+      height: 2px;
+      background: linear-gradient(90deg, transparent, #D4AF37, transparent);
+      margin: 0 auto 20px;
+    }
+
+    .logo-title {
+      font-family: 'Playfair Display', serif;
+      font-size: 36px;
+      font-weight: 700;
+      color: #D4AF37;
+      letter-spacing: 3px;
+      text-transform: uppercase;
+      text-shadow: 0 0 20px rgba(212, 175, 55, 0.3);
+      margin-bottom: 4px;
+    }
+
+    .logo-subtitle {
+      font-size: 13px;
+      color: #aaaaaa;
+      letter-spacing: 6px;
+      text-transform: uppercase;
+      font-weight: 300;
+      margin-bottom: 25px;
+    }
+
+    /* QR Kod Container */
+    .qr-wrapper {
+      background: #ffffff;
+      border-radius: 16px;
+      padding: 20px;
+      display: inline-block;
+      margin: 0 auto 25px;
+      box-shadow: 0 4px 20px rgba(212, 175, 55, 0.1);
+    }
+
+    .qr-wrapper canvas,
+    .qr-wrapper img {
+      display: block;
+    }
+
+    /* Alt metin */
+    .scan-text {
+      font-size: 15px;
+      color: #f8f8f8;
+      font-weight: 600;
+      margin-bottom: 6px;
+      letter-spacing: 1px;
+    }
+
+    .scan-desc {
+      font-size: 12px;
+      color: #888;
+      letter-spacing: 0.5px;
+      margin-bottom: 20px;
+    }
+
+    /* Altın çizgi alt */
+    .gold-line-bottom {
+      width: 40px;
+      height: 1px;
+      background: linear-gradient(90deg, transparent, #D4AF37, transparent);
+      margin: 0 auto 15px;
+    }
+
+    .wifi-info {
+      font-size: 11px;
+      color: #555;
+      letter-spacing: 1px;
+      text-transform: uppercase;
+    }
+
+    /* Yazdırma ayarları */
+    @media print {
+      body {
+        background: white;
+        padding: 0;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+      }
+      .qr-card {
+        box-shadow: none;
+        border: 2px solid #D4AF37;
+        -webkit-print-color-adjust: exact;
+        print-color-adjust: exact;
+      }
+      .no-print { display: none; }
+    }
+
+    /* Yazdır butonu */
+    .print-btn {
+      margin-top: 30px;
+      background: #D4AF37;
+      color: #000;
+      border: none;
+      padding: 12px 30px;
+      border-radius: 25px;
+      font-family: 'Inter', sans-serif;
+      font-size: 14px;
+      font-weight: 600;
+      cursor: pointer;
+      letter-spacing: 1px;
+      transition: all 0.3s ease;
+    }
+    .print-btn:hover {
+      background: #e6c452;
+      box-shadow: 0 4px 15px rgba(212, 175, 55, 0.4);
+    }
+  </style>
+</head>
+<body>
+
+  <div style="text-align: center;">
+    <div class="qr-card" id="qr-card">
+      <span class="corner-bl">✦</span>
+      <span class="corner-br">✦</span>
+      
+      <div class="gold-line"></div>
+      
+      <div class="logo-title">Eylül</div>
+      <div class="logo-subtitle">Cafe & Nargile</div>
+
+      <div class="qr-wrapper" id="qr-container"></div>
+
+      <div class="scan-text">📱 Menü İçin QR Kodu Okutun</div>
+      <div class="scan-desc">Tüm menümüzü telefonunuzdan görüntüleyin</div>
+
+      <div class="gold-line-bottom"></div>
+
+      <div class="wifi-info">eylul-vafe.vercel.app</div>
+    </div>
+
+    <button class="print-btn no-print" onclick="window.print()">🖨️ Yazdır</button>
+  </div>
+
+  <script>
+    // QR Kod oluştur
+    var qr = qrcode(0, 'M');
+    qr.addData('https://eylul-vafe.vercel.app/');
+    qr.make();
+
+    // QR kodu img olarak ekle
+    var container = document.getElementById('qr-container');
+    var img = document.createElement('img');
+    img.src = qr.createDataURL(8, 0);
+    img.alt = 'Eylül Cafe Menü QR Kod';
+    img.style.width = '220px';
+    img.style.height = '220px';
+    img.style.imageRendering = 'pixelated';
+    container.appendChild(img);
+  </script>
+
+</body>
+</html>
